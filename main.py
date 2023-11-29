@@ -1,16 +1,18 @@
-# This is a sample Python script.
+import cv2
+import cvlib as cv
+from cvlib.object_detection import draw_bbox
+from gtts import gTTS
+from playsound import playsound
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+video = cv2.VideoCapture(0)
 
+while True:
+    ret, frame = video.read()
+    bbox, label, conf = cv.detect_common_objects(frame)
+    output_image = draw_bbox(frame, bbox, label, conf)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    cv2.imshow("Object Detection: ", output_image)
 
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
